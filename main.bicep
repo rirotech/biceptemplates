@@ -31,11 +31,16 @@ param useAppService string = ''
 @description('The name of the resource group containing the VNet to associate with.')
 param vNetResourceGroup string = ''
 
-@description('The name of the VNet to associate with.')
-param vNetName string = ''
-
 @description('The name of the subnet on the VNet to associate with.')
 param subNetName string = ''
+
+@description('Department code for the group responsible for the application.')
+param vNetDepartment string
+
+@description('Location for all resources.')
+param useVNet string  = ''
+
+var vNetworkName = empty(useVNet) ? '${vNetDepartment}-Iaas-East' : useVNet
 
 // var addvNet = ((!empty(vNetResourceGroup)) && (!empty(vNetName)) && (!empty(subNetName)))
 // var subnetRef = resourceId(vNetResourceGroup, 'Microsoft.Network/virtualNetworks/subnets', vNetName, subNetName)
@@ -92,6 +97,17 @@ module appInsightModule 'AppInsight/appinsight.bicep' = {
   }
 }
 
+module vnetModule 'VirtualNetwork/virtualNetwork.bicep' = {
+  name: vNetworkName
+  params:{
+    subNetName: subNetName
+    location: location
+    vNetDepartment: vNetDepartment
+    useVNet: useVNet
+  }
+  scope: resourceGroup(vNetResourceGroup)
+}
+
 
 module appServiceModule 'AppService/AppService.bicep' = {
   name: appServiceName
@@ -106,7 +122,7 @@ module appServiceModule 'AppService/AppService.bicep' = {
     location: location
     appName: appName
     webAppName: appServiceName
-    vNetName: vNetName
+    vNetworkName: vNetworkName
     vNetResourceGroup: vNetResourceGroup
     subNetName: subNetName
   }

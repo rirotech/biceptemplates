@@ -35,17 +35,25 @@ param webAppName string
 param alwaysOn bool = false
 param clientAffinityEnabled bool = false
 
-// @description('The name of the resource group containing the VNet to associate with.')
-// param vNetResourceGroup string = ''
+@description('The name of the resource group containing the VNet to associate with.')
+param vNetResourceGroup string = ''
 
-// @description('The name of the VNet to associate with.')
-// param vNetName string = ''
+@description('The name of the subnet on the VNet to associate with.')
+param subNetName string = ''
 
-// @description('The name of the subnet on the VNet to associate with.')
-// param subNetName string = ''
+// @description('Location for all resources.')
+// param useVNet string  = ''
 
-// var addvNet = ((!empty(vNetResourceGroup)) && (!empty(vNetName)) && (!empty(subNetName)))
-// var subnetRef = resourceId(vNetResourceGroup, 'Microsoft.Network/virtualNetworks/subnets', vNetName, subNetName)
+@description('Location for all resources.')
+param vNetworkName string  = ''
+
+// @description('Department code for the group responsible for the application.')
+// param vNetDepartment string
+
+// var vNetworkName = empty(useVNet) ? '${vNetDepartment}-Iaas-East' : useVNet
+
+var addvNet = ((!empty(vNetResourceGroup)) && (!empty(vNetworkName)) && (!empty(subNetName)))
+var subnetRef = resourceId(vNetResourceGroup, 'Microsoft.Network/virtualNetworks/subnets', vNetworkName, subNetName)
 
 var vNetRef = [
   {
@@ -106,19 +114,19 @@ var vNetRef = [
     name:useAppService
   }
   
-  // resource webApp_AppInsights 'Microsoft.Web/sites/siteextensions@2022-03-01' = {
-  //   parent: webApp
-  //   name: 'Microsoft.ApplicationInsights.AzureWebSites'
+  resource webApp_AppInsights 'Microsoft.Web/sites/siteextensions@2022-03-01' = {
+    parent: webApp
+    name: 'Microsoft.ApplicationInsights.AzureWebSites'
   
-  // }
+  }
 
 
-  // resource webAppName_virtualNetwork 'Microsoft.Web/sites/networkConfig@2018-11-01' = if (addvNet) {
-  //   parent: webApp
-  //   name: 'virtualNetwork'
-  //   properties: {
-  //     subnetResourceId: subnetRef
-  //     swiftSupported: true 
-  //   }
-  // }
+  resource webAppName_virtualNetwork 'Microsoft.Web/sites/networkConfig@2018-11-01' = if (addvNet) {
+    parent: webApp
+    name: 'virtualNetwork'
+    properties: {
+      subnetResourceId: subnetRef
+      swiftSupported: true 
+    }
+  }
   

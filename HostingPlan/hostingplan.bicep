@@ -46,5 +46,4 @@ resource existingHostingPlan 'Microsoft.Web/serverfarms@2022-03-01' existing = i
   name:useHostingPlan
 }
 
-
 output hostingPlanId string = newHostingPlan.id

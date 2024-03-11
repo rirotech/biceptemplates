@@ -10,15 +10,8 @@ param useHostingPlan = ''
 param sku = 'S1'
 param useAppInsights = ''
 param useAppService = ''
-// param vNetResourceGroup = 'ACG-Networking-RG'
 
+param vNetResourceGroup = 'ACG-Networking-RG'
+param subNetName = 'ACG-VNETintegration-PropertySearch-East'
+param vNetDepartment = 'ACG'
 
-// param vNetName = 'ACG-IaaS-East'
-
-// param subNetName = 'ACG-VNETintegration-PropertySearch-East'
-
-// param privateEndpointVnetName = 'ACG-IaaS-East'
-
-// param privateEndpointVnetResourceGroup = 'ACG-Networking-RG'
-
-// param privateEndpointSubnetName = 'ACG-AzurePrivateEndpoints-East'
