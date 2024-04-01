@@ -1,56 +1,19 @@
-@description('Location for all resources.')
 param location string = 'eastus'
-
-@description('Department code for the group responsible for the application.')
-param department string
-
-@description('The name of the application.')
-param appName string
-
-@description('The name of the target environment (Dev/Test/Etc.).')
+param company string
+param applicationName string
 param environment string
-
-@description('The name of the App Insights instance to use. Must exist. If not specified, a new instance will be created.')
 param useAppService string = ''
-
-@description('The name of the target environment (Dev/Test/Etc.).')
 param identityDefinition object
-
-@description('The name of the target environment (Dev/Test/Etc.).')
 param hostingPlanId string
-
-@description('The name of the target environment (Dev/Test/Etc.).')
 param appIdentity string
-
-@description('The name of the target environment (Dev/Test/Etc.).')
 param appInsightsInstrumentaionKey string
-
-@description('The name of the target environment (Dev/Test/Etc.).')
 param appInsightsConnectionString string
-
-@description('The name of the target environment (Dev/Test/Etc.).')
 param webAppName string
-
-@description('Sets always on property for production slot only.')
 param alwaysOn bool = false
 param clientAffinityEnabled bool = false
-
-@description('The name of the resource group containing the VNet to associate with.')
 param vNetResourceGroup string = ''
-
-@description('The name of the subnet on the VNet to associate with.')
 param subNetName string = ''
-
-// @description('Location for all resources.')
-// param useVNet string  = ''
-
-@description('Location for all resources.')
 param vNetworkName string  = ''
-
-// @description('Department code for the group responsible for the application.')
-// param vNetDepartment string
-
-// var vNetworkName = empty(useVNet) ? '${vNetDepartment}-Iaas-East' : useVNet
 
 var addvNet = ((!empty(vNetResourceGroup)) && (!empty(vNetworkName)) && (!empty(subNetName)))
 var subnetRef = resourceId(vNetResourceGroup, 'Microsoft.Network/virtualNetworks/subnets', vNetworkName, subNetName)
@@ -103,8 +66,8 @@ var vNetRef = [
       }
     }
     tags: {
-      Department: department
-      AppName: appName
+      Department: company
+      AppName: applicationName
       Environment: environment
     }
   }

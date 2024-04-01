@@ -1,7 +1,7 @@
 using './main.bicep'
 
-param department = 'DTS'
-param appName = 'PropSrch'
+param company = 'RRT'
+param applicationName = 'WhiteLagoon'
 param environment = 'dev'
 param location = 'eastus'
 param useManagedIdentity = ''
@@ -11,7 +11,7 @@ param sku = 'S1'
 param useAppInsights = ''
 param useAppService = ''
 
-param vNetResourceGroup = 'ACG-Networking-RG'
-param subNetName = 'ACG-VNETintegration-PropertySearch-East'
-param vNetDepartment = 'ACG'
+param vNetResourceGroup = 'rg-RRT-vnet-eastus'
+param subNetName = 'snet-RRT-eastus'
+param vNetDepartment = 'RRT'
 

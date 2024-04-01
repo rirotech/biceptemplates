@@ -1,31 +1,17 @@
-@description('Location for all resources.')
 param location string = 'eastus'
-
-@description('Department code for the group responsible for the application.')
-param department string
-
-@description('The name of the application.')
-param appName string
-
-@description('The name of the target environment (Dev/Test/Etc.).')
+param company string
+param applicationName string
 param environment string
-
-@description('The name of the target environment (Dev/Test/Etc.).')
 param identityName string
-
-@description('The name of the User Managed Identity to use. Must exist. If not specified, a new instance will be created.')
 param useManagedIdentity string = ''
-
-// var identityDefinition = json('{"type":"UserAssigned","userAssignedIdentities" : {"${empty(useManagedIdentity) ? identity.id : existingIdentity.id}":{}}}')
-// var appIdentity = (empty(useManagedIdentity) ? identity : existingIdentity)
 
 // Creating Identity
 resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = if(empty(useManagedIdentity)){
   name: identityName
   location: location
   tags: {
-    Department: department
-    AppName: appName
+    Department: company
+    AppName: applicationName
     Environment: environment
   }
 }
