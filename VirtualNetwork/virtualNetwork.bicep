@@ -39,4 +39,3 @@ resource existingVNet 'Microsoft.Network/virtualNetworks@2019-11-01' existing = 
   name:useVNet
 }
 
-// output subnetId string = vnet.properties.subnets

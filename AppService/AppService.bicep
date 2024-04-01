@@ -73,7 +73,7 @@ var vNetRef = [
   }
 
   
-  resource existingWebApp 'Microsoft.Web/sites@2022-03-01' existing  = if (!empty(useAppService)){
+  resource existingWebApp 'Microsoft.Web/sites@2022-03-01' existing  = if (!empty(webApp)){
     name:useAppService
   }
   
